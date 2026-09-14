@@ -1,0 +1,47 @@
+# ====================================================================================
+# PIPELINE DI CONTINUOUS INTEGRATION: maven-ci.yml
+# ====================================================================================
+name: Java CI with Maven
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    services:
+      # Avvia un container PostgreSQL temporaneo per simulare l'ambiente di produzione
+      # e validare che le configurazioni generali non vadano in crash all'avvio
+      postgres-db:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_PASSWORD: changemeinprod!
+        ports:
+          - 5432:5432
+        # Attende che Postgres sia pronto prima di avviare il build Java
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+    # 1. Scarica il codice sorgente dal repository nella macchina virtuale
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    # 2. Configura l'ambiente di runtime con Java 17 (Eclipse Temurin)
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven # Abilita la cache per velocizzare i build successivi
+
+    # 3. Esegue la build completa e la suite di tutti i 37 test d'integrazione
+    - name: Build and Run Tests with Maven
+      run: mvn clean package
