@@ -1,0 +1,55 @@
+# ====================================================================================
+# INFRASTRUTTURA LOCALE: docker-compose.yml
+# ====================================================================================
+# Questo file definisce e configura i servizi multi-container per l'applicazione.
+# Nel contesto di sviluppo, si occupa di istanziare e avviare automaticamente un
+# database relazionale PostgreSQL, garantendo la persistenza locale dei dati.
+# ====================================================================================
+
+# La versione 3.1 del compose è ormai superata (oggi la parola chiave version è persino
+# opzionale nelle specifiche moderne)
+# CONSIGLIO: toglierlo
+version: '3.1'
+
+services:
+
+  # ------------------------------------------------------------------------------------
+  # SERVIZIO DATABASE: PostgreSQL
+  # ------------------------------------------------------------------------------------
+  db:
+    # Immagine ufficiale PostgreSQL recuperata da Docker Hub
+    # NOTA TECNICA:
+    # In produzione o per garantire riproducibilità, è fortemente consigliato fissare
+    # una versione specifica (ad esempio 'postgres:18-alpine' o 'postgres:16-alpine').
+    # Usare 'latest' (come in questo tutorial) comporta il rischio che l'immagine cambi
+    # nel tempo, potenzialmente introducendo breaking changes imprevisti.
+    # CONSIGLIO: image: postgres:16-alpine
+    image: postgres
+
+    # Mappatura delle porte: collega la porta 5432 del container alla porta 5432 dell'host locale.
+    # Consente l'accesso al database sia a Spring Boot sia a strumenti esterni (es. DBeaver).
+    ports:
+      - "5432:5432"
+
+    # Politica di riavvio: garantisce che il database si riavvii automaticamente in caso di arresto anomalo.
+    restart: always
+
+    # Variabili d'ambiente per l'inizializzazione del database:
+    # Definisce la password amministrativa predefinita per l'utente 'postgres'.
+    # ATTENZIONE: Allineata con la chiave 'spring.datasource.password' in application.properties.
+    environment:
+      POSTGRES_PASSWORD: changemeinprod!
+
+      # NOTA TECNICA (Persistenza dei Dati):
+      # Nel codice originale non è presente il montaggio di un volume.
+      # Senza il campo 'volumes', tutti i dati inseriti nel database vengono eliminati
+      # non appena il container viene fermato con 'docker-compose down'.
+      # Per uno sviluppo sereno o per un ambiente di produzione, si consiglia di montare
+      # un volume locale (es. './postgres-data:/var/lib/postgresql/data') per mantenere
+      # i dati anche dopo lo spegnimento del container.
+      # CONSIGLIO:
+      #    volumes:
+      #      - postgres-data:/var/lib/postgresql/data
+      # E definizione dei volumi centralizzati usati dai servizi
+      #    volumes:
+      #      postgres-data:
