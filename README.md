@@ -1,4 +1,4 @@
-# SpringTutorialBasics-ITA 📚
+# SpringDataJPA-Postgres-Template-ITA 📚
 
 Benvenuto! Questo progetto nasce come **risorsa didattica e guida pratica per la community italiana**, pensata specificamente per ragazzi appena usciti dall'università, sviluppatori junior o professionisti che vogliono aggiornarsi sulle tecnologie dell'ecosistema Spring Boot 3.
 
