@@ -28,7 +28,7 @@ A differenza dei classici tutorial "copia e incolla", ogni riga di codice qui è
 ---
 
 ## 📖 Documentazione Teorico-Pratica Allegata
-Per completare l'esperienza formativa, all'interno della cartella `/DOCS` del repository vengono messe a disposizione due documentazioni testuali estese in italiano (la prima è stata già caricata, mentre la seconda è in fase di revisione e correzione), strutturate in capitoli didattici sequenziali:
+Per completare l'esperienza formativa, all'interno della cartella `/docs` del repository vengono messe a disposizione due documentazioni testuali estese in italiano (la prima è stata già caricata, mentre la seconda è in fase di revisione e correzione), strutturate in capitoli didattici sequenziali:
 
 1. **Guida Teorica a Spring Boot & Architettura REST:** Un manuale completo che analizza l'architettura logica di Spring (Inversion of Control, ciclo di vita dei Beans, Autoconfiguration), sviscera i principi guida delle **REST API** e ripercorre l'evoluzione dello strato di persistenza dati: dai concetti di basso livello con **JDBC e DAO**, fino alla gestione avanzata con **Spring Data JPA**, PostgreSQL e il database in-memory H2 per i test.
 2. **Guida alla Costruzione della REST API (Passo-Dopo-Passo):** Una documentazione tecnica focalizzata sul *Presentation Layer* e sul *Service Layer*. Analizza nel dettaglio la conversione bidirezionale dei dati, il funzionamento dei processi di *Marshalling/Unmarshalling* operati da Jackson JSON e le regole di design per strutturare endpoint RESTful, sicuri e idempotenti.
