@@ -27,14 +27,14 @@ A differenza dei classici tutorial "copia e incolla", ogni riga di codice qui è
 
 ---
 
-## 📖 Documentazione Teorico-Pratica Allegata
-Per completare l'esperienza formativa, all'interno della cartella `/docs` del repository vengono messe a disposizione due documentazioni testuali estese in italiano (la prima è stata già caricata, mentre la seconda è in fase di revisione e correzione), strutturate in capitoli didattici sequenziali:
+## 📖 Documentazione Teorico-Pratica Allegata (`/docs`)
+Per completare l'esperienza formativa, all'interno della cartella `/docs` del repository vengono messe a disposizione due documentazioni testuali estese in italiano, strutturate in capitoli didattici sequenziali:
 
-1. **Guida Teorica a Spring Boot & Architettura REST:** Un manuale completo che analizza l'architettura logica di Spring (Inversion of Control, ciclo di vita dei Beans, Autoconfiguration), sviscera i principi guida delle **REST API** e ripercorre l'evoluzione dello strato di persistenza dati: dai concetti di basso livello con **JDBC e DAO**, fino alla gestione avanzata con **Spring Data JPA**, PostgreSQL e il database in-memory H2 per i test.
-2. **Guida alla Costruzione della REST API (Passo-Dopo-Passo):** Una documentazione tecnica focalizzata sul *Presentation Layer* e sul *Service Layer*. Analizza nel dettaglio la conversione bidirezionale dei dati, il funzionamento dei processi di *Marshalling/Unmarshalling* operati da Jackson JSON e le regole di design per strutturare endpoint RESTful, sicuri e idempotenti.
+1. **Guida Teorica a Spring Boot & Architettura REST (`docs/Guida Teorica a Spring Boot & Architettura REST.pdf`):** Un manuale completo che analizza l'architettura logica di Spring (Inversion of Control, ciclo di vita dei Beans, Autoconfiguration), sviscera i principi guida delle **REST API**, include una **Roadmap didattica in 10 step** e ripercorre l'evoluzione dello strato di persistenza dati: dai concetti di basso livello con **JDBC e DAO**, fino alla gestione avanzata con **Spring Data JPA**, PostgreSQL e il database in-memory H2 per i test.
+2. **Guida alla Costruzione della REST API (Passo-Dopo-Passo) (`docs/Costruzione della REST api.pdf`):** Una documentazione tecnica focalizzata sul *Presentation Layer* e sul *Service Layer*. Analizza nel dettaglio la conversione bidirezionale dei dati tramite DTO e **ModelMapper**, il funzionamento della serializzazione/deserializzazione con **Jackson JSON**, la gestione della paginazione con `Pageable`, le regole di design RESTful (operazioni `PUT`, `POST`, `PATCH` e `DELETE`), fino al deployment finale containerizzato con **Docker** su **AWS LightSail**.
 
 > ⚠️ **Nota sulla Revisione:**  
-> Una volta caricate entrambe le documentazioni, vi sarà sicuramente un lavoro di correzione ulteriore: essendo state scritte con l'ausilio di **NotebookLM**, non si escludono eventuali errori o imperfezioni da affinare, oltre a quelli di natura umana.
+> Una volta caricate entrambe le documentazioni, vi sarà un lavoro di revisione e correzione continuo: essendo state redatte con l'ausilio di **NotebookLM**, non si escludono eventuali imprecisioni o refusi da affinare, oltre a quelli di natura umana.
 
 ---
 
@@ -53,6 +53,16 @@ Troppo spesso i corsi universitari trascurano i test. In questo progetto trovera
 * **H2 Database** (Database volatile in-memory configurato in *PostgreSQL Mode* con dialetto dedicato per emulare fedelmente i vincoli dello strato dati reale nei test).
 * **ModelMapper (v3.0.0)** (Configurazione con strategia *LOOSE* abilitata per la mappatura atomica di grafi e DTO nidificati profondi).
 * **Lombok & Jackson** (Meta-programmazione per l'eliminazione del codice boilerplate e libreria nativa per la serializzazione/deserializzazione JSON).
+
+---
+
+## 🚀 Deployment & Containerization (Docker & AWS)
+
+Il progetto è predisposto per la distribuzione in ambienti containerizzati e cloud-native:
+* **Sviluppo Locale (Docker Compose):** Il database PostgreSQL viene istanziato tramite `docker-compose.yml` sulla porta `5432` con volumi isolati.
+* **Packaging Docker:** L'applicazione viene impacchettata in un'immagine leggera basata su `openjdk:17-jdk-alpine` definita all'interno del `Dockerfile`.
+* **Deployment Cloud su AWS LightSail:** Predisposto per il caricamento del contenitore via AWS CLI (`aws lightsail push-container-image`), con iniezione dinamica delle credenziali del database remoto tramite variabili d'ambiente (`SPRING_DATASOURCE_URL`, `SPRING_DATASOURCE_USERNAME`, `SPRING_DATASOURCE_PASSWORD`) e configurazione tollerante degli *Health Check*.
+* **Client di Testing:** Supporto completo per il collaudo degli endpoint tramite **Postman** e **Bruno**.
 
 ---
 *Questo progetto è una risorsa ad accesso libero e gratuito. Se stai studiando per un esame universitario, per superare un colloquio tecnico o per aggiornare le tue competenze aziendali, usa il codice e i commenti all'interno dei file come una vera e propria accademia passo-passo!*
